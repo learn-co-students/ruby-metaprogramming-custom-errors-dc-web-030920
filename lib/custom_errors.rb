@@ -1,3 +1,4 @@
+require 'pry'
 class Person
   attr_accessor :partner, :name
 
@@ -7,7 +8,22 @@ class Person
 
   def get_married(person)
     self.partner = person
+    if person.class != Person
+      begin
+        raise PartnerError
+      rescue PartnerError => error
+        binding.pry
+        error.message
+      end
+    else
     person.partner = self
+    end
+  end
+
+  class PartnerError < StandardError
+    def message
+      puts "there is an error"
+    end
   end
 
 end
